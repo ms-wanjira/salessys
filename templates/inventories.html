@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+    <html>
+
+<body>
+    <!-- navabar -->
+    <nav class="navbar navbar-expand-md navbar-light">
+        <div class="container">
+            <a href="#intro" class="navbar-brand">
+                <span class="fw-bold text-info">
+                    <!-- <i class="bi bi-money"></i> -->
+                    Tech Palour.
+                </span>
+            </a>
+            <!-- toggle button for mobile nav -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav"
+                aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- navbar links -->
+            <div class="collapse navbar-collapse justify-content-end align-center" id="main-nav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- <a class="nav-link" href="#dashboard">Dashboard</a> -->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sales">Sales</a>
+                    </li>
+                    <li class="nav-item"></li>
+                    <a class="nav-link" href="/inventories">Inventories</a>
+                    </li>
+                    <li class="nav-item"></li>
+                    <!-- <a class="nav-link" href="#pricing">Stock</a> -->
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- <body> -->
+    <!-- display a list of users on a ordered list -->
+    <!-- <ol>
+        {% for i in rows %}
+        <li>{{ i }}</li>
+        {% endfor %}
+    </ol>
+     -->
+    <!-- </body> -->
+    <!-- Button trigger modal -->
+    <div class="text-center">
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Add Item
+        </button>
+    </div>
+    <!-- {{rows}} -->
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Add Modal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/inventories" method="POST">
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label"> Name</label>
+                            <input type="text" class="form-control" name="name" id="exampleFormControlInput1"
+                                placeholder="eg.Mangoes">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Buying Price</label>
+                            <input type="name" class="form-control" name="quantity" id="exampleFormControlInput1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Selling Price</label>
+                            <input type="name" class="form-control" name="buyingprice" id="exampleFormControlInput1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Quantity</label>
+                            <input type="name" class="form-control" name="sellingprice" id="exampleFormControlInput1">
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-dark" data-bs-dismiss="modal">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container mt-3">
+        <div class="col-11">
+            <table class="table" id="example">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">name</th>
+                        <th scope="col">Buying Price</th>
+                        <th scope="col">Selling Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Sale<i class="fa fa-usd" aria-hidden="true"></i></th>
+                        <!-- <th scope="col">Edit</th> -->
+                        <!-- <th scope="col">Delete</th> --> 
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in rows %}
+                    <tr>
+                        <td scope="row">{{i[0]}}</td>
+                        <td>{{i[1]}}</td>
+                        <td>{{i[2]}}</td>
+                        <td>{{i[3]}}</td>
+                        <td>{{i[4]}}</td>
+                        <td>
+                            <!-- Button trigger modal -->
+                            <div class="text-center">
+                                <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop1">
+                                    Make Sale
+                                </button>
+                            </div>
+                            <!-- {{rows}} -->
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Sale Modal</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/sales" method="POST">
+                                                 <div class="mb-3">
+                                                    
+                                                    <input type="hidden" value="{{i[0]}}" name="id">
+  
+                                                </div> 
+                                                <div class="mb-3">
+                                                    <label for=" "
+                                                        class="form-label">Quantity</label>
+                                                    <input type="text" class="form-control" name="quantity"
+                                                        id="quantity">
+                                                </div>
+                                                <div>
+                                                    <button type="submit" class="btn btn-dark"
+                                                        data-bs-dismiss="modal">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-info"
+                                                data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        {% endfor %}
+        </div>
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ"
+        crossorigin="anonymous"></script>
+    <script src="/static/Javascript/main.js"></script>
+
+
+</body>
+
+</html>
