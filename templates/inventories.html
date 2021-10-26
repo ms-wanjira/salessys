@@ -80,7 +80,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Add Modal</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+                 </div>
                 <div class="modal-body">
                     <form action="/inventories" method="POST">
                         <div class="mb-3">
@@ -141,13 +141,13 @@
                             <!-- Button trigger modal -->
                             <div class="text-center">
                                 <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop1">
+                                    data-bs-target="#staticBackdrop1{{i[0]}}">
                                     Make Sale
                                 </button>
                             </div>
                             <!-- {{rows}} -->
                             <!-- Modal -->
-                            <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static"
+                            <div class="modal fade" id="staticBackdrop1{{i[0]}}" data-bs-backdrop="static"
                                 data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                 aria-hidden="true">
                                 <div class="modal-dialog">

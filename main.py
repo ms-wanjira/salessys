@@ -53,7 +53,7 @@ def sales():
     cur = conn.cursor()
     cur.execute("""SELECT * FROM sales """)
     x = cur.fetchall()
-    print(x)
+    # print(x)
     # return redirect(url_for('sales'))
     
     if request.method == "POST":
@@ -63,14 +63,15 @@ def sales():
         cur.execute("""select quantity from inventories where id=%(r)s""",{"r":r})
         y=cur.fetchone()
         q=int(q)
-        print(q)
+        # print(q)
         b=y[0]-q
-        print(b)
+        # print(b)
         if b>=0:
                 cur.execute(""" UPDATE inventories SET quantity=%(b)s WHERE id=%(r)s""",{"b":b,"r":r})
                 cur.execute("""INSERT INTO sales(id,quantity) VALUES(%(r)s,%(q)s)""",{"r":r,"q":q})
                 conn.commit()
-                print(r,b)
+            
+                print("THIS IS THE ID",r,b)
                 return redirect(url_for('sales'))
 
     return render_template("sales.html", rows=x)
