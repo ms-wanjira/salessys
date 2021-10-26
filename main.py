@@ -34,7 +34,7 @@ def inventories():
 
 
             cur = conn.cursor()
-            cur.execute("""INSERT INTO inventories(name,quantity,buying_price,selling_price) VALUES (%(n)s, %(bp)s,%(sp)s,%(quan)s)""",{"n":name, "bp":buyingprice,"sp":sellingprice,"quan":quantity})
+            cur.execute("""INSERT INTO inventories(name,quantity,buying_price,selling_price) VALUES (%(n)s, %(quan)s,%(bp)s,%(sp)s)""",{"n":name, "quan":quantity,"bp":buyingprice,"sp":sellingprice})
             conn.commit()
             return redirect("/inventories")
     else:
@@ -53,6 +53,8 @@ def sales():
     cur = conn.cursor()
     cur.execute("""SELECT * FROM sales """)
     x = cur.fetchall()
+    print(x)
+    # return redirect(url_for('sales'))
     
     if request.method == "POST":
         cur = conn.cursor()
@@ -71,6 +73,60 @@ def sales():
                 print(r,b)
                 return redirect(url_for('sales'))
 
-    return render_template("sales.html", x=x)
+    return render_template("sales.html", rows=x)
    
 app.run(debug=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
