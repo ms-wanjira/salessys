@@ -22,17 +22,14 @@ def index():
 
 
 @app.route('/inventories', methods=['POST', 'GET'])
-def inventories():
+def inventories_mimi():
     if request.method=='POST':
             cur=conn.cursor()
             name=request.form["name"]
             quantity=request.form['quantity']
             buyingprice=request.form["buyingprice"]
             sellingprice=request.form["sellingprice"]
-
             print(name,quantity,buyingprice,sellingprice)
-
-
             cur = conn.cursor()
             cur.execute("""INSERT INTO inventories(name,quantity,buying_price,selling_price) VALUES (%(n)s, %(quan)s,%(bp)s,%(sp)s)""",{"n":name, "quan":quantity,"bp":buyingprice,"sp":sellingprice})
             conn.commit()
@@ -53,12 +50,12 @@ def sales():
     cur = conn.cursor()
     cur.execute("""SELECT * FROM sales """)
     x = cur.fetchall()
-    # print(x)
+    print(x)
     # return redirect(url_for('sales'))
     
     if request.method == "POST":
         cur = conn.cursor()
-        r=request.form["id"]
+        r=request.form["product_id"]
         q= request.form["quantity"]
         cur.execute("""select quantity from inventories where id=%(r)s""",{"r":r})
         y=cur.fetchone()
@@ -68,13 +65,31 @@ def sales():
         # print(b)
         if b>=0:
                 cur.execute(""" UPDATE inventories SET quantity=%(b)s WHERE id=%(r)s""",{"b":b,"r":r})
-                cur.execute("""INSERT INTO sales(id,quantity) VALUES(%(r)s,%(q)s)""",{"r":r,"q":q})
+                cur.execute("""INSERT INTO sales(product_id,quantity) VALUES(%(r)s,%(q)s)""",{"r":r,"q":q})
                 conn.commit()
             
                 print("THIS IS THE ID",r,b)
                 return redirect(url_for('sales'))
 
     return render_template("sales.html", rows=x)
+
+
+
+@app.route('/sales/<int:x>')
+def viewsale(x):
+    cur = conn.cursor()
+    cur.execute("""SELECT * FROM sales where product_id=%(product_id)s """,{"product_id":x})
+    x = cur.fetchall()
+    print(x)
+    return render_template('sales.html' ,rows=x)
+    
+    
+
+
+
+
+
+
    
 app.run(debug=True)
 
