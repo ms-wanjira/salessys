@@ -1,7 +1,9 @@
 from itertools import product
 from flask import Flask, render_template, request, url_for
 import psycopg2
-from werkzeug.utils import redirect
+from werkzeug.utils import redirect   
+
+
 # try:
 conn = psycopg2.connect("dbname='mytechshop' user='postgres' host='localhost' password='Tamara98'")
 
@@ -69,7 +71,7 @@ def sales():
                 conn.commit()
             
                 print("THIS IS THE ID",r,b)
-                return redirect(url_for('sales'))
+                return redirect(url_for('inventories_mimi'))
 
     return render_template("sales.html", rows=x)
 
@@ -83,10 +85,12 @@ def viewsale(x):
     print(x)
     return render_template('sales.html' ,rows=x)
     
+@app.route('/dashboard')
+def dashboard():
     
 
 
-
+    return render_template('dashboard.html')   
 
 
 
