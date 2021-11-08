@@ -57,20 +57,20 @@ def sales():
     
     if request.method == "POST":
         cur = conn.cursor()
-        r=request.form["product_id"]
+        r=request.form["name"]
         q= request.form["quantity"]
-        cur.execute("""select quantity from inventories where id=%(r)s""",{"r":r})
+        cur.execute("""select quantity from inventories where name=%(r)s""",{"r":r})
         y=cur.fetchone()
         q=int(q)
         # print(q)
         b=y[0]-q
         # print(b)
         if b>=0:
-                cur.execute(""" UPDATE inventories SET quantity=%(b)s WHERE id=%(r)s""",{"b":b,"r":r})
-                cur.execute("""INSERT INTO sales(product_id,quantity) VALUES(%(r)s,%(q)s)""",{"r":r,"q":q})
+                cur.execute(""" UPDATE inventories SET quantity=%(b)s WHERE name=%(r)s""",{"b":b,"r":r})
+                cur.execute("""INSERT INTO sales(name,quantity) VALUES(%(r)s,%(q)s)""",{"r":r,"q":q})
                 conn.commit()
             
-                print("THIS IS THE ID",r,b)
+                # print("THIS IS THE ID",r,b)
                 return redirect(url_for('inventories_mimi'))
 
     return render_template("sales.html", rows=x)
@@ -87,14 +87,14 @@ def viewsale(x):
     
 @app.route('/dashboard')
 def dashboard():
-    
-
-
-    return render_template('dashboard.html')   
-
-
-
    
+
+
+
+    return render_template("dashboard.html")
+
+
+
 app.run(debug=True)
 
 
