@@ -126,7 +126,7 @@
                         <th scope="col">Selling Price</th>
                         <th scope="col">Sale<i class="fa fa-usd" aria-hidden="true"></i></th>
                         <th> Show Sale</th>
-                        <!-- <th scope="col">Edit</th> -->
+                        <th scope="col">Edit</th>
                         <!-- <th scope="col">Delete</th> -->
                     </tr>
                 </thead>
@@ -188,11 +188,67 @@
                         <td>
                             <div class="text-center">
                                 <button type="button" class="btn btn-info" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop1{{i[0]}}" link-style="none">
+                                    data-bs-target="#staticBackdrop2{{i[0]}}" link-style="none">
                                     <a href="/sales/{{i[0]}}">View Sale</a></button>
                             </div>
                         </td>
-
+                        <td>
+                            <!-- Button trigger modal -->
+                            <div class="text-center">
+                                <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop3{{i[0]}}">
+                                    Edit Sale
+                                </button>
+                            </div>
+                            <!-- {{rows}} -->
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop3{{i[0]}}" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel3">Edit Sale Modal</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/sales" method="POST">
+                                                <div class="mb-3">
+                                                    <input type="hidden" value="{{i[0]}}" name="id">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <input type="hidden" value="{{i[1]}}" name="name">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for=" " class="form-label">Quantity</label>
+                                                    <input type="text" class="form-control" name="quantity"
+                                                        id="quantity">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for=" " class="form-label">Buying Price</label>
+                                                    <input type="text" class="form-control" name="buyingprice"
+                                                        id="buyingprice">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for=" " class="form-label">Selling Price</label>
+                                                    <input type="text" class="form-control" name="sellingprice"
+                                                        id="sellingprice">
+                                                </div>
+                                                <div>
+                                                    <button type="submit" class="btn btn-dark"
+                                                        data-bs-dismiss="modal">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-info"
+                                                data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         </td>
         </div>
 
 

@@ -50,7 +50,7 @@ def inventories_mimi():
 @app.route('/sales', methods=['POST', 'GET'])
 def sales():
     cur = conn.cursor()
-    cur.execute("""SELECT * FROM sales """)
+    cur.execute("""SELECT id,product_id,quantity,DATE(sales_date),product_name FROM sales """)
     x = cur.fetchall()
     print(x)
     # return redirect(url_for('sales'))
@@ -69,10 +69,9 @@ def sales():
         if b>=0:
                 cur.execute(""" UPDATE inventories SET quantity=%(b)s WHERE id=%(r)s AND name =%(t)s""",{"b":b,"t":t ,"r":r})
                 cur.execute("""INSERT INTO sales(product_id,product_name,quantity) VALUES(%(r)s,%(t)s,%(q)s)""",{"r":r,"t":t,"q":q})
-
                 conn.commit()           
                 # print("THIS IS THE ID",r,b)
-                return redirect(url_for('inventories_mimi'))
+                return redirect(url_for('.sales'))
 
     return render_template("sales.html", rows=x)
 
@@ -81,17 +80,33 @@ def sales():
 @app.route('/sales/<int:x>')
 def viewsale(x):
     cur = conn.cursor()
-    cur.execute("""SELECT * FROM sales where product_id=%(product_id)s """,{"product_id":x})
+    cur.execute("""SELECT id,product_id,quantity,DATE(sales_date),product_name FROM sales where product_id=%(product_id)s """,{"product_id":x})
     x = cur.fetchall()
     print(x)
     return render_template('sales.html' ,rows=x)
+
+
+@app.route('/sales', methods=['POST', 'GET'])
+def editsale():
+    if request.method =="POST":
+        cur = conn.cursor()
+        v=request.form["id"]
+        w=request.form["name"]
+        x=request.form["quantity"]
+        y=request.form["buyingprice"]
+        z=request.form["sellingprice"]
+        if x<=0:
+            cur.execute(""" UPDATE inventories SET quantity=%(x)s buyingprice=%(y)s sellingprice%(z)s WHERE id=%(v)s AND name =%(w)s""",{"x":x,"y":y ,"z":z,"v":v,"w":w})
+            cur.execute("""INSERT INTO inventories(quantity,buyingprice,sellingprice) VALUES(%(x)s,%(y)s,%(z)s)""",{"x":x,"y":y,"z":z})
+            conn.commit()           
+             # print("THIS IS THE ID",r,b)
+            return redirect(url_for('.inventories'))
+        # return render_template('inventories.html', rows=x)
+       
+  
     
 @app.route('/dashboard')
 def dashboard():
-   
-
-
-
     return render_template("dashboard.html")
 
 
