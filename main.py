@@ -86,7 +86,7 @@ def viewsale(x):
     return render_template('sales.html' ,rows=x)
 
 
-@app.route('/sales', methods=['POST', 'GET'])
+@app.route('/inventories')
 def editsale():
     if request.method =="POST":
         cur = conn.cursor()
@@ -99,15 +99,14 @@ def editsale():
             cur.execute(""" UPDATE inventories SET quantity=%(x)s buyingprice=%(y)s sellingprice%(z)s WHERE id=%(v)s AND name =%(w)s""",{"x":x,"y":y ,"z":z,"v":v,"w":w})
             cur.execute("""INSERT INTO inventories(quantity,buyingprice,sellingprice) VALUES(%(x)s,%(y)s,%(z)s)""",{"x":x,"y":y,"z":z})
             conn.commit()           
-             # print("THIS IS THE ID",r,b)
-            return redirect(url_for('.inventories'))
-        # return render_template('inventories.html', rows=x)
+            # return redirect(url_for('.inventories'))
+        return render_template('inventories.html')
        
   
     
-@app.route('/dashboard')
+@app.route('/insights')
 def dashboard():
-    return render_template("dashboard.html")
+    return render_template("insights.html")
 
 
 
